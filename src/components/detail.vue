@@ -24,8 +24,7 @@
             }
           },
           isSave(){
-            //this.$toast('上架成功')
-            this.$message('确认保存么？')
+            this.goBack()
           }
         },
         components:{
