@@ -55,7 +55,20 @@
            >
              <template slot-scope="scope">
                <el-button type="text" size="small" @click="goDetail">查看</el-button>
-               <el-button type="text" size="small">编辑</el-button>
+               <el-popover
+                 placement="top"
+                 width="300"
+                 trigger="click"
+                 :ref="`pop${scope.row.id}`"
+                 >
+                 <p>这是一段内容这是一段内容确定删除吗？</p>
+                 <div style="text-align: right; margin: 0">
+                   <el-button size="mini" type="text" @click="hideDialog(scope.row.id)">取消</el-button>
+                   <el-button type="primary" size="mini" @click="hideDialog(scope.row.id)">确定</el-button>
+                 </div>
+                 <el-button type="text" size="small" slot="reference">删除</el-button>
+               </el-popover>
+
              </template>
            </el-table-column>
          </el-table>
@@ -72,6 +85,7 @@
       name: "questionManage",
       data(){
         return{
+          currentIndex:null,
           formInline: {
             user: '',
             region: '',
@@ -79,27 +93,39 @@
           tableData: [{
             date: '2016-05-02',
             name: '王小虎1',
-            address: '上海市普陀区金沙江路 1518 弄'
+            address: '上海市普陀区金沙江路 1518 弄',
+            id:1,
+            show: false
           }, {
             date: '2016-05-04',
             name: '王小虎2',
-            address: '上海市普陀区金沙江路 1517 弄'
+            address: '上海市普陀区金沙江路 1517 弄',
+            show: false,
+            id:2,
           }, {
             date: '2016-05-01',
             name: '王小虎3',
-            address: '上海市普陀区金沙江路 1519 弄'
+            address: '上海市普陀区金沙江路 1519 弄',
+            show: false,
+            id:3,
           }, {
             date: '2016-05-03',
             name: '王小虎4',
-            address: '上海市普陀区金'
+            address: '上海市普陀区金',
+            show: false,
+            id:4,
           },{
             date: '2016-05-02',
             name: '王小虎5',
-            address: '上海市普陀区金沙江路 1518 弄'
+            address: '上海市普陀区金沙江路 1518 弄',
+            show: false,
+            id:5,
           }, {
             date: '2016-05-04',
             name: '王小虎6',
-            address: '上海市普陀区金沙江路 1517 弄'
+            address: '上海市普陀区金沙江路 1517 弄',
+            show: false,
+            id:6,
           },
           ]
         }
@@ -113,6 +139,11 @@
         },100)
       },
       methods:{
+        hideDialog(id){
+          var str = `pop${id}`
+          console.log(str)
+          this.$refs[str].doClose()//方法，代验证，本地模拟的数据不生效
+        },
         cellWidthChange(newWidth, oldWidth, column, event){
           if(newWidth < column.minWidth){
             column.width = column.minWidth
