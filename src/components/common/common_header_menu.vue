@@ -1,6 +1,6 @@
 <template>
   <div id="containerWrap">
-    <div class="topHeader">头部固定</div>
+    <div class="topHeader">Social CRM</div>
     <div class="contentWrap">
       <div class="left">
         <div class="menuW">
@@ -149,6 +149,8 @@
 </style>
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
+
+  @import "../../assets/css/base";
   #containerWrap{
     width: 100%;
     height: 100%;
@@ -160,10 +162,12 @@
       left: 0;
       width: 100%;
       height: 50px;
-      background:linear-gradient(180deg,rgba(24,149,136,1) 0%,rgba(0,138,124,1) 100%);
+      background: $backgroud_color;
+      //background:linear-gradient(180deg,$backgroud_color 0%,$backgroud_color 100%);
       text-align: center;
       line-height: 50px;
       z-index: 100;
+      color: #fff;
     }
     .contentWrap{
       width: 100%;
@@ -198,7 +202,7 @@
             }
           }
           .parentMenu:hover{
-            color:#008A7C;
+            color:$active_text_color;
           }
           .subMenu{
             width: 100%;
@@ -214,11 +218,11 @@
               cursor: pointer;
             }
             .subItem:hover{
-              color:#008A7C;
+              color:$active_text_color;
             }
             .active{
-              background:#008A7C;
-              color: white !important;
+              background:$hover_tab_color;
+              color:$active_text_color !important;
             }
           }
         }

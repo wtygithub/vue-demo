@@ -5,6 +5,7 @@ import ManageActivity from '@/components/manageActivity'
 import QuestionBank from '@/components/questionBank'
 import QuestioManage from '@/components/questionManage'
 import Detail from '@/components/detail'
+import createH5 from '@/pages/h5/createH5'
 
 Vue.use(Router)
 
@@ -39,6 +40,11 @@ export default new Router({
       name: 'detail',
       component: Detail,
 
+    },
+    {
+      path: '/createH5',
+      name: 'createH5',
+      component: createH5,
     }
   ]
 })
