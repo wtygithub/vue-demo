@@ -8,6 +8,7 @@
         <el-tabs v-model="activeName" type="card">
           <el-tab-pane label="H5模版" name="first">
             <div class="listWrap">
+              <!--添加-->
               <div class="emptyTemplate">
                 <div class="add">
                   <router-link target="_blank" to="/createH5">
@@ -15,6 +16,10 @@
                   </router-link>
 
                 </div>
+              </div>
+              <!--模版列表-->
+              <div class="listItem" v-for="(item,index) in templateList" :key="index">
+                <img :src="item.url" alt="">
               </div>
             </div>
           </el-tab-pane>
@@ -32,7 +37,26 @@
     name: 'home',
     data () {
       return{
-        activeName:'first'
+        activeName:'first',
+        templateList:[
+          {url:'http://upload.chengdu.cn/2019/0326/1553588098374.jpg'},
+          {url:'http://upload.chengdu.cn/2019/0326/1553588098374.jpg'},
+          {url:'http://upload.chengdu.cn/2019/0326/1553588098374.jpg'},
+          {url:'http://upload.chengdu.cn/2019/0326/1553588098374.jpg'},
+          {url:'http://upload.chengdu.cn/2019/0326/1553588098374.jpg'},
+          {url:'http://upload.chengdu.cn/2019/0326/1553588098374.jpg'},
+          {url:'http://upload.chengdu.cn/2019/0326/1553588098374.jpg'},
+          {url:'http://upload.chengdu.cn/2019/0326/1553588098374.jpg'},
+          {url:'http://upload.chengdu.cn/2019/0326/1553588098374.jpg'},
+          {url:'http://upload.chengdu.cn/2019/0326/1553588098374.jpg'},
+          {url:'http://upload.chengdu.cn/2019/0326/1553588098374.jpg'},
+          {url:'http://upload.chengdu.cn/2019/0326/1553588098374.jpg'},
+          {url:'http://upload.chengdu.cn/2019/0326/1553588098374.jpg'},
+          {url:'http://upload.chengdu.cn/2019/0326/1553588098374.jpg'},
+          {url:'http://upload.chengdu.cn/2019/0326/1553588098374.jpg'},
+          {url:'http://upload.chengdu.cn/2019/0326/1553588098374.jpg'},
+
+        ]
       }
     },
     mounted(){
@@ -56,6 +80,7 @@
   .makeH5{
     width: 100%;
     height: 100%;
+    overflow-y: auto;
     .banner{
       width: 100%;
       height: 300px;
@@ -66,16 +91,19 @@
     }
     .H5list{
       width: 100%;
-      height: calc(100vh - 350px);
+      min-height: calc(100vh - 350px);
       box-sizing: border-box;
       border: 15px solid #eee;
       padding: 20px;
       background: #fff;
       .listWrap{
+        float: left;
         .emptyTemplate{
-          width: 200px;
-          height: 300px;
-          line-height: 300px;
+          float: left;
+          width:170px;
+          height:273px;
+          line-height: 273px;
+          margin: 0 24px 24px 0;
           background: #fff;
           box-sizing: border-box;
           border: 1px dashed #ecf5ff;
@@ -84,6 +112,17 @@
           .el-icon-plus{
             font-size: 30px;
             cursor: pointer;
+          }
+        }
+        .listItem{
+          float: left;
+          width:170px;
+          height:273px;
+          line-height: 273px;
+          margin: 0 24px 24px 0;
+          img{
+            width: 100%;
+            height: 100%;
           }
         }
       }

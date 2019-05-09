@@ -2,7 +2,7 @@
   <div id="containerWrap">
     <div class="topHeader">Social CRM</div>
     <div class="contentWrap">
-      <div class="left">
+      <div class="left" id="leftSide">
         <div class="menuW">
           <div v-for="(item,index) in menulist" :key="item.id">
             <div class="parentMenu" :class="{activeParent:item.isActive}" @click="showSubItem(index)">
@@ -19,10 +19,11 @@
           </div>
         </div>
       </div>
-      <div class="right">
+      <div class="right" id="centerRight">
         <slot></slot>
       </div>
     </div>
+    <button id="collapse" @click="foldSide">收起</button>
   </div>
 </template>
 
@@ -75,7 +76,8 @@
               },
             ]
           },
-        ]
+        ],
+        flag:1,
       }
     },
     created(){
@@ -103,7 +105,22 @@
       console.log(this.menulist)
     },
     methods:{
+      foldSide(){
+        if(this.flag ==1){
+          var side = document.getElementById('leftSide')
+          var collapseBtn = document.getElementById('collapse')
+          side.style.width = '56px'
+          collapseBtn.style.width = '56px'
+          this.flag = 2
+        }else if(this.flag == 2){
+          var side = document.getElementById('leftSide')
+          var collapseBtn = document.getElementById('collapse')
+          side.style.width = '180px'
+          collapseBtn.style.width = '180px'
+          this.flag = 1
+        }
 
+      },
       showSubItem(index){
         for(var j=0;j<this.menulist.length;j++){
           if(j == index){
@@ -156,6 +173,7 @@
     height: 100%;
     box-sizing: border-box;
     padding-top: 50px;
+    position: relative;
     .topHeader{
       position: fixed;
       top: 0;
@@ -173,6 +191,7 @@
       width: 100%;
       height: 100%;
       overflow: hidden;
+      display: flex;
       .left{
         float: left;
         width: 180px;
@@ -229,10 +248,21 @@
       }
       .right{
         float: left;
-        width: calc(100% - 180px);
+        flex: 1;
+        //width: calc(100% - 180px);
         height: 100%;
         background: lightgrey;
       }
+    }
+    #collapse{
+      position: fixed;
+      left: 0;
+      bottom: 0;
+      width: 180px;
+      height: 40px;
+      background: #ccc;
+      border: none;
+      cursor: pointer;
     }
   }
 
