@@ -13,6 +13,8 @@
     //computed:mapGetters(['getList'])
     computed:{
       keepList(){
+        console.log('getters===>')
+        console.log(this.$store.state['editor'])
         return this.$store.getters.getList
       }
     }

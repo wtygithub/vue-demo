@@ -39,23 +39,7 @@
       return{
         activeName:'first',
         templateList:[
-          {url:'http://upload.chengdu.cn/2019/0326/1553588098374.jpg'},
-          {url:'http://upload.chengdu.cn/2019/0326/1553588098374.jpg'},
-          {url:'http://upload.chengdu.cn/2019/0326/1553588098374.jpg'},
-          {url:'http://upload.chengdu.cn/2019/0326/1553588098374.jpg'},
-          {url:'http://upload.chengdu.cn/2019/0326/1553588098374.jpg'},
-          {url:'http://upload.chengdu.cn/2019/0326/1553588098374.jpg'},
-          {url:'http://upload.chengdu.cn/2019/0326/1553588098374.jpg'},
-          {url:'http://upload.chengdu.cn/2019/0326/1553588098374.jpg'},
-          {url:'http://upload.chengdu.cn/2019/0326/1553588098374.jpg'},
-          {url:'http://upload.chengdu.cn/2019/0326/1553588098374.jpg'},
-          {url:'http://upload.chengdu.cn/2019/0326/1553588098374.jpg'},
-          {url:'http://upload.chengdu.cn/2019/0326/1553588098374.jpg'},
-          {url:'http://upload.chengdu.cn/2019/0326/1553588098374.jpg'},
-          {url:'http://upload.chengdu.cn/2019/0326/1553588098374.jpg'},
-          {url:'http://upload.chengdu.cn/2019/0326/1553588098374.jpg'},
-          {url:'http://upload.chengdu.cn/2019/0326/1553588098374.jpg'},
-
+          {url:'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1558535006349&di=c3db6c5aa75a26c32b77048a181cd3a7&imgtype=0&src=http%3A%2F%2Fbpic.588ku.com%2Fback_water_img%2F19%2F04%2F03%2Ff149f4766560029c0e1e0c5119dbc432.jpg'}
         ]
       }
     },
@@ -106,7 +90,7 @@
           margin: 0 24px 24px 0;
           background: #fff;
           box-sizing: border-box;
-          border: 1px dashed #ecf5ff;
+          border: 1px dashed #ccc;
           text-align: center;
           cursor: pointer;
           .el-icon-plus{

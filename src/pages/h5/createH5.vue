@@ -1,5 +1,5 @@
 <template>
-  <div id="h5_container">
+  <div id="h5_container" class="editor">
     <div id="h5_header">
       <div class="left">
         <i class="el-icon-back"></i>
@@ -17,6 +17,7 @@
       </div>
     </div>
     <div id="editWrap">
+      <!--侧导航-->
       <div class="left_tab">
         <div v-for="(item,index) in tabList" :key="index" class="tab_item" @click="showMaterial(index)" :class="{isActive: activeIndex == index}">
           <div class="itemWrap">
@@ -27,37 +28,91 @@
           </div>
         </div>
       </div>
+      <!--添加元素区域-->
       <div class="materialWrap">
-        <!--背景-->
-        <div class="bg">
-          <div class="bgW">
-            <div class="title1" :class="{active_bgtab: activite_BgTab}" @click="change_bgTab">我的</div>
-            <div class="title2" :class="{active_bgtab:!activite_BgTab}" @click="change_bgTab">推荐</div>
-          </div>
-          <div class="bg_img">
-
-          </div>
-        </div>
-        <!--文本-->
-        <div class="text">
-
-        </div>
-        <!--素材-->
-        <div class="material"></div>
-        <!--图片-->
-        <div class="photo"></div>
-        <!--音乐-->
-        <div class="music"></div>
+        <bgList v-show="activeIndex==0"></bgList>
+        <testList v-show="activeIndex==1"></testList>
+        <materialList v-show="activeIndex==2"></materialList>
+        <imageList v-show="activeIndex==3"></imageList>
+        <musicList v-show="activeIndex==4"></musicList>
       </div>
-      <div class="content"></div>
-      <div class="styleWrap"></div>
+      <!--展示区域-->
+      <div class="contentWrap">
+        <contentComponent :editorElement="element"></contentComponent>
+      </div>
+      <!--设置样式区域-->
+      <div class="styleWrap">
+        <!--背景设置-->
+        <div class="bgSet" v-if="panelTabState === 0">
+          <div class="tabWrap">
+            <div class="lef" :class="{activeTab:currentPropertyTab === 1}" @click="currentPropertyTab = 1">背景设置</div>
+            <div class="rig" :class="{activeTab:currentPropertyTab === 2}" @click="currentPropertyTab = 2">图层</div>
+          </div>
+          <bgSet :element="element" v-show="currentPropertyTab === 1"></bgSet>
+          <layer v-show="currentPropertyTab === 2"></layer>
+        </div>
+        <!--文本设置-->
+        <div class="textSetWrap"  v-if="panelTabState === 1">
+          <div class="textTab">
+            <div class="lef" :class="{activeTab1:currentPropertyTab === 1}" @click="currentPropertyTab = 1">文本设置</div>
+            <div class="mid" :class="{activeTab1:currentPropertyTab === 2}" @click="currentPropertyTab = 2">动效设置</div>
+            <div class="rig" :class="{activeTab1:currentPropertyTab === 3}" @click="currentPropertyTab = 3">图层</div>
+          </div>
+          <textSet :element="element" v-show="currentPropertyTab === 1"></textSet>
+          <animationSet :element="element" v-show="currentPropertyTab === 2"></animationSet>
+          <layer v-show="currentPropertyTab === 3"></layer>
+        </div>
+        <!--形状设置-->
+        <div class="textSetWrap"  v-if="panelTabState === 2">
+          <div class="textTab">
+            <div class="lef" :class="{activeTab1:currentPropertyTab === 1}" @click="currentPropertyTab = 1">形状设置</div>
+            <div class="mid" :class="{activeTab1:currentPropertyTab === 2}" @click="currentPropertyTab = 2">动效设置</div>
+            <div class="rig" :class="{activeTab1:currentPropertyTab === 3}" @click="currentPropertyTab = 3">图层</div>
+          </div>
+          <shapeSet :element="element" v-show="currentPropertyTab === 1"></shapeSet>
+          <animationSet :element="element" v-show="currentPropertyTab === 2"></animationSet>
+          <layer v-show="currentPropertyTab === 3"></layer>
+        </div>
+        <!--图片设置-->
+        <div class="textSetWrap"  v-if="panelTabState === 3">
+          <div class="textTab">
+            <div class="lef" :class="{activeTab1:currentPropertyTab === 1}" @click="currentPropertyTab = 1">图片设置</div>
+            <div class="mid" :class="{activeTab1:currentPropertyTab === 2}" @click="currentPropertyTab = 2">动效设置</div>
+            <div class="rig" :class="{activeTab1:currentPropertyTab === 3}" @click="currentPropertyTab = 3">图层</div>
+          </div>
+          <imageSet :element="element" v-show="currentPropertyTab === 1"></imageSet>
+          <animationSet :element="element" v-show="currentPropertyTab === 2"></animationSet>
+          <layer v-show="currentPropertyTab === 3"></layer>
+        </div>
+        <!--音乐设置-->
+        <div class="bgSet" v-if="panelTabState === 4">
+          <div class="tabWrap">
+            <div class="lef" :class="{activeTab:currentPropertyTab === 1}" @click="currentPropertyTab = 1">音乐设置</div>
+            <div class="rig" :class="{activeTab:currentPropertyTab === 2}" @click="currentPropertyTab = 2">图层</div>
+          </div>
+          <musicSet v-show="currentPropertyTab === 1"></musicSet>
+          <layer v-show="currentPropertyTab === 2"></layer>
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
- // import {tabList} from '../../assets/js/option'
-  import common_header_menu from '../../components/common/common_header_menu'
+    import bgList from './bgList'
+    import testList from './testList'
+    import materialList from './materialList'
+    import musicList from './musicList'
+    import imageList from './imageList'
+    import contentComponent from './contentView'//中间编辑区域
+    import bgSet from './bgSet'//背景设置
+    import textSet from './testSet'//文本设置
+    import shapeSet from './materialSet'//素材设置
+    import imageSet from './imageSet'//图片设置
+    import animationSet from './animationSet'//动效设置
+    import layer from './layerView'//图层设置
+    import musicSet from './musicSet'//音乐设置
+    import '../../assets/js/editorIconfont'
     export default {
         name: "createH5",
         data(){
@@ -70,193 +125,85 @@
               {type:'bg',title:'音乐',iconClass:'el-icon-service'}
             ],//左侧导航
             activeIndex:0,//左侧导航栏活跃状态
-            activite_BgTab:true,//背景tab
-            textList:[
-              {
-                type:'text',
-                title:'大标题',
-                active:false,
-                initStyle:{
-                  'font-size': '48px','text-align': 'center','font-family':'MicrosoftYaHei','color':'#fff'
-                },
-                style: {
-                  'position': 'absolute',
-                  'top': '50%',
-                  'left': '50%',
-                  'bottom': '',
-                  'right': '',
-                  'font-size': '48px',
-                  'cursor': 'move',
-                  '-moz-user-select': 'none',
-                  '-webkit-user-select': 'none',
-                  'width': '80%',
-                  'height':'',
-                  'font-family': 'Microsoft YaHei',
-                  'box-sizing': 'border-box',
-                  'color': 'black',
-                  'transform': '',
-                  'rotate': '0deg',
-                  'rotate_r': '120px',
-                  'opacity': 1,
-                  'text-align': 'center',
-                  'font-weight': '',
-                  'font-style': '',
-                  'text-decoration': 'none',
-                  'margin-top': '',
-                  'margin-left': '',
-                  'z-index':'',
-                },
-              },
-              {
-                type:'text',
-                title:'标题',
-                active:false,
-                initStyle:{
-                  'font-size': '30px','text-align': 'center','font-family':'MicrosoftYaHei','color':'#fff'
-                },
-                style: {
-                  'position': 'absolute',
-                  'top': '50%',
-                  'left': '50%',
-                  'bottom': '',
-                  'right': '',
-                  'font-size': '30px',
-                  'cursor': 'move',
-                  '-moz-user-select': 'none',
-                  '-webkit-user-select': 'none',
-                  'width': '80%',
-                  'height':'',
-                  'font-family': 'Microsoft YaHei',
-                  'box-sizing': 'border-box',
-                  'color': 'black',
-                  'transform': '',
-                  'rotate': '0deg',
-                  'rotate_r': '120px',
-                  'opacity': 1,
-                  'text-align': 'center',
-                  'font-weight': '',
-                  'font-style': '',
-                  'text-decoration': 'none',
-                  'margin-top': '',
-                  'margin-left': '',
-                  'z-index':'',
-                },
-              },
-              {
-                type:'text',
-                title:'副标题',
-                active:false,
-                initStyle:{
-                  'font-size': '20px','text-align': 'center','font-family':'MicrosoftYaHei','color':'#fff'
-                },
-                style: {
-                  'position': 'absolute',
-                  'top': '50%',
-                  'left': '50%',
-                  'bottom': '',
-                  'right': '',
-                  'font-size': '20px',
-                  'cursor': 'move',
-                  '-moz-user-select': 'none',
-                  '-webkit-user-select': 'none',
-                  'width': '80%',
-                  'height':'',
-                  'font-family': 'Microsoft YaHei',
-                  'box-sizing': 'border-box',
-                  'color': 'black',
-                  'transform': '',
-                  'rotate': '0deg',
-                  'rotate_r': '120px',
-                  'opacity': 1,
-                  'text-align': 'center',
-                  'font-weight': '',
-                  'font-style': '',
-                  'text-decoration': 'none',
-                  'margin-top': '',
-                  'margin-left': '',
-                  'z-index':'',
-                },
-              },
-              {
-                type:'text',
-                title:'小标题',
-                active:false,
-                initStyle:{
-                  'font-size': '18px','text-align': 'center','font-family':'MicrosoftYaHei','color':'#fff'
-                },
-                style: {
-                  'position': 'absolute',
-                  'top': '50%',
-                  'left': '50%',
-                  'bottom': '',
-                  'right': '',
-                  'font-size': '18px',
-                  'cursor': 'move',
-                  '-moz-user-select': 'none',
-                  '-webkit-user-select': 'none',
-                  'width': '80%',
-                  'height':'',
-                  'font-family': 'Microsoft YaHei',
-                  'box-sizing': 'border-box',
-                  'color': 'black',
-                  'transform': '',
-                  'rotate': '0deg',
-                  'rotate_r': '120px',
-                  'opacity': 1,
-                  'text-align': 'center',
-                  'font-weight': '',
-                  'font-style': '',
-                  'text-decoration': 'none',
-                  'margin-top': '',
-                  'margin-left': '',
-                  'z-index':'',
-                },
-              },
-              {
-                type:'text',
-                title:'正文',
-                active:false,
-                initStyle:{
-                  'font-size': '14px','text-align': 'center','font-family':'MicrosoftYaHei','color':'#fff'
-                },
-                style: {
-                  'position': 'absolute',
-                  'top': '50%',
-                  'left': '50%',
-                  'bottom': '',
-                  'right': '',
-                  'font-size': '14px',
-                  'cursor': 'move',
-                  '-moz-user-select': 'none',
-                  '-webkit-user-select': 'none',
-                  'width': '80%',
-                  'height':'',
-                  'font-family': 'Microsoft YaHei',
-                  'box-sizing': 'border-box',
-                  'color': 'black',
-                  'transform': '',
-                  'rotate': '0deg',
-                  'rotate_r': '120px',
-                  'opacity': 1,
-                  'text-align': 'center',
-                  'font-weight': '',
-                  'font-style': '',
-                  'text-decoration': 'none',
-                  'margin-top': '',
-                  'margin-left': '',
-                  'z-index':'',
-                },
-              },
-            ]
+            activeName:'first',
+            activeBgTab:true,//背景设置tab
+            panelTabState:0,
+            currentPropertyTab:1,
           }
+        },
+        mounted() {
+          this.$store.dispatch('createTheme')
+          /*初始化页面*/
+          this.$store.dispatch('addPage')
+          document.addEventListener('keyup', this.deleteListener)
+        },
+        destroyed(){
+          document.removeEventListener('keyup',this.deleteListener)
         },
         methods:{
           showMaterial(index){
             this.activeIndex = index
           },
-          change_bgTab(){
-            this.activite_BgTab = !this.activite_BgTab
+          changeBgTab(){
+            this.activeBgTab = !this.activeBgTab
+          },
+          //删除元素
+          deleteListener(event){
+            if(event.keyCode === 8 && event.target.nodeName !== 'INPUT' && event.target.nodeName !== 'TEXTAREA'){
+              this.$store.dispatch('deleteSelectedElement')
+            }
+            if(event.keyCode === 46 && event.target.nodeName !== 'INPUT' && event.target.nodeName !== 'TEXTAREA'){
+              this.$store.dispatch('deleteSelectedElement')
+            }
           }
+        },
+        computed:{
+          //正在编辑的元素
+          element(){
+            let element = this.$store.state.editor.editorElement
+            return  element || {}
+          }
+        },
+        watch:{
+          //正在编辑的元素
+          element() {
+            let ele = this.$store.state.editor.editorElement
+            let type = ele ? ele.type : 'null'
+            this.panelTabState = 0
+            this.currentPropertyTab = 1;
+            switch (type) {
+              case 'bg':
+                this.panelTabState = 0
+                break
+              case 'text':
+                this.panelTabState = 1
+                break
+              case 'icon':
+                this.panelTabState = 2
+                break
+              case 'pic':
+                this.panelTabState = 3
+                break
+              case 'music':
+                this.panelTabState = 4
+                break
+            }
+          },
+        },
+        components:{
+          bgList,
+          testList,
+          materialList,
+          musicList,
+          imageList,
+          contentComponent,
+          bgSet,
+          textSet,
+          shapeSet,
+          imageSet,
+          animationSet,
+          layer,
+          musicSet
         }
     }
 </script>
@@ -266,6 +213,7 @@
   #h5_container{
     width: 100%;
     height: 100%;
+    overflow: hidden;
     #h5_header{
       width: 100%;
       height: 48px;
@@ -314,7 +262,7 @@
     #editWrap{
       width: 100%;
       height: calc(100vh - 48px);
-      .left_tab,.materialWrap,.content{
+      .left_tab,.materialWrap,.contentWrap{
         float: left;
       }
       .left_tab{
@@ -359,8 +307,6 @@
         width: 300px;
         height: 100%;
         background-color: #646a74;
-        box-sizing: border-box;
-        padding: 0 10px 0 10px;
         .bg{
           width: 100%;
           height: 100%;
@@ -395,9 +341,10 @@
           }
         }
       }
-      .content{
-        width: calc(100vh - 660px);
+      .contentWrap{
+        width: calc(100% - 660px);
         height: 100%;
+        background: #efefef;
       }
       .styleWrap{
         float: right;
@@ -405,6 +352,56 @@
         height: 100%;
         box-sizing: border-box;
         border-left: 1px solid #d7d7d7;
+        /*背景设置*/
+        .bgSet{
+          width: 100%;
+          height: 100%;
+          .tabWrap{
+            display: flex;
+            width: 100%;
+            height: 40px;
+            line-height: 40px;
+            font-size:14px;
+            font-family:MicrosoftYaHei;
+            color:rgba(153,153,153,1);
+            text-align: center;
+            .lef,.rig{
+              width: 50%;
+              height: 100%;
+              border-bottom: 1px solid #CCCCCC;
+              cursor: pointer;
+            }
+            .activeTab{
+              color: $active_color;
+              border-bottom: 1px solid $active_color;
+            }
+          }
+        }
+        /*文本设置*/
+        .textSetWrap{
+          width: 100%;
+          height: 100%;
+          .textTab{
+            display: flex;
+            width: 100%;
+            height: 40px;
+            line-height: 40px;
+            font-size:14px;
+            font-family:MicrosoftYaHei;
+            color:rgba(153,153,153,1);
+            text-align: center;
+            .lef,.mid,.rig{
+              width: 33.33%;
+              height: 100%;
+              border-bottom: 1px solid #CCCCCC;
+              cursor: pointer;
+            }
+            .activeTab1{
+              color: $active_color;
+              border-bottom: 1px solid $active_color;
+            }
+          }
+        }
       }
     }
   }

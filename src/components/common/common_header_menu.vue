@@ -23,7 +23,7 @@
         <slot></slot>
       </div>
     </div>
-    <button id="collapse" @click="foldSide">收起</button>
+    <!--<button id="collapse" @click="foldSide">收起</button>-->
   </div>
 </template>
 
